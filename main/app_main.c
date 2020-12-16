@@ -33,6 +33,10 @@
 
 static const char *TAG = "app";
 
+
+void mdns_main(void);
+
+
 /* Signal Wi-Fi events on this event-group */
 const int WIFI_CONNECTED_EVENT = BIT0;
 static EventGroupHandle_t wifi_event_group;
@@ -122,20 +126,63 @@ esp_err_t custom_prov_data_handler(uint32_t session_id, const uint8_t *inbuf, ss
     return ESP_OK;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------
+int inputText(void *Parm)
+{
+    int ReturnCode = 0;
+    char c = 0;
+    char str[100];
+    memset(str, 0, sizeof(str));
+    printf("\n\n >> %s:: Please type some text.... \n", (char *)Parm);
+    while (c != '\n')
+    {
+        c = getchar(); // Non-blocking function
+        if (c != 0xFF) // Nothing entered
+        {
+            str[strlen(str)] = c;
+            printf("%c", c);
+            if (c == 'y' || c == 'Y')
+            {
+                ReturnCode = 1;
+            }
+            
+        }
+        // vTaskDelay(3000 / portTICK_PERIOD_MS);
+        vTaskDelay(10);
+    }
+    printf("\n");
+    printf("Your Text: %s\n", str);
+
+    return ReturnCode;
+
+}
+
+
 void app_main(void)
 {
     /* Initialize NVS partition */
     esp_err_t ret = nvs_flash_init();
-    // if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) 
-    // {
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) 
+    {
+        printf("\nResetting NVS\n\n");
         /* NVS partition was truncated
-         * and needs to be erased */
+        * and needs to be erased */
         ESP_ERROR_CHECK(nvs_flash_erase());
 
         /* Retry nvs_flash_init */
         ESP_ERROR_CHECK(nvs_flash_init());
-    // }
+    }
 
+    if (inputText("1st") == 1)
+    {
+        printf("\nReturnCode = 0\n\n");
+        /* NVS partition was truncated
+        * and needs to be erased */
+        ESP_ERROR_CHECK(nvs_flash_erase());
+
+        /* Retry nvs_flash_init */
+        ESP_ERROR_CHECK(nvs_flash_init());
+    }
 
     /* Initialize TCP/IP */
     ESP_ERROR_CHECK(esp_netif_init());
@@ -279,8 +326,9 @@ void app_main(void)
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_EVENT, false, true, portMAX_DELAY);
 
     /* Start main application now */
+    mdns_main();
     while (1) {
         ESP_LOGI(TAG, "Hello World!");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(30000 / portTICK_PERIOD_MS);
     }
 }

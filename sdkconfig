@@ -123,7 +123,7 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
-# Example Connection Configuration-
+# Example Connection Configuration
 #
 CONFIG_EXAMPLE_CONNECT_WIFI=y
 CONFIG_EXAMPLE_WIFI_SSID="myssid"
@@ -134,7 +134,7 @@ CONFIG_EXAMPLE_CONNECT_IPV6_PREF_LOCAL_LINK=y
 # CONFIG_EXAMPLE_CONNECT_IPV6_PREF_GLOBAL is not set
 # CONFIG_EXAMPLE_CONNECT_IPV6_PREF_SITE_LOCAL is not set
 # CONFIG_EXAMPLE_CONNECT_IPV6_PREF_UNIQUE_LOCAL is not set
-# end of Example Connection Configuration-
+# end of Example Connection Configuration
 
 #
 # Example Configuration
@@ -142,6 +142,10 @@ CONFIG_EXAMPLE_CONNECT_IPV6_PREF_LOCAL_LINK=y
 CONFIG_EXAMPLE_PROV_TRANSPORT_BLE=y
 # CONFIG_EXAMPLE_PROV_TRANSPORT_SOFTAP is not set
 CONFIG_EXAMPLE_PROV_TRANSPORT=1
+CONFIG_MDNS_HOSTNAME="esp32-mdns"
+CONFIG_MDNS_INSTANCE="ESP32 with mDNS"
+# CONFIG_MDNS_RESOLVE_TEST_SERVICES is not set
+# CONFIG_MDNS_ADD_MAC_TO_HOSTNAME is not set
 # end of Example Configuration
 
 #
