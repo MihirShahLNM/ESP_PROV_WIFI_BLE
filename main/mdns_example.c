@@ -20,8 +20,6 @@
 #include "netdb.h"
 
 #define MDNS_ADD_MAC_TO_HOSTNAME 1
-#define WIFI_SSID "myHotNet"
-#define WIFI_PASSWORD "Gogogone@2020"
 #define CONNECT_IPV6 1
 #define CONNECT_IPV6_PREF_LOCAL_LINK 1
 #define MDNS_HOSTNAME "DSM4"
